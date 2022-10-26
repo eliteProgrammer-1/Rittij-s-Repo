@@ -53,6 +53,7 @@ int main()
     while (ptr != NULL)
     {
         printf("%d ", (*ptr).data);
-        ptr = (*ptr).next;
+        // ptr = (*ptr).next;
+        ptr = ptr->next;
     }
 }
