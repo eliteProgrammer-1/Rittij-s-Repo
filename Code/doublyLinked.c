@@ -96,6 +96,44 @@ struct node* addNodeAtMid(struct node* head, int index, int val)
     return newHead;
 }
 
+int countNodes(struct node* head)
+{
+    int nodes = 0;
+    while (head != NULL)
+    {   
+        nodes = nodes + 1;
+        head = head->next;
+    }
+    return nodes;
+}
+
+struct node* deleteNode(struct node* head, int index)
+{   
+    struct node* newHead = head;
+    if(index == 0)
+    {
+
+    }
+    else
+    {
+        int currIndex = 0;
+        while(currIndex != index - 1)
+        {
+            head = head->next;
+            currIndex++;
+        }
+
+        struct node* deletingNode = head->next;
+        head->next = deletingNode->next;
+        if(head->next != NULL)
+        {
+            head->next->prev = head;
+        }
+        free(deletingNode);
+        return newHead;
+    }
+}
+
 int main()
 {
     struct node* head = (struct node*)malloc(sizeof(struct node));
@@ -109,8 +147,11 @@ int main()
 
     // head = addNodeAtHead(head, 10);
     // head = addNodeAtHead(head, 12);
-
-    head = addNodeAtMid(head, 2, 100);
+    // head = addNodeAtMid(head, 2, 100);
+    
+    forwardTravsersal(head);
+    printf("\n");
+    head = deleteNode(head, 2);
 
     forwardTravsersal(head);
     printf("\n");
