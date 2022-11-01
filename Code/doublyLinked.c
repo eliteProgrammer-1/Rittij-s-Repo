@@ -112,7 +112,8 @@ struct node* deleteNode(struct node* head, int index)
     struct node* newHead = head;
     if(index == 0)
     {
-
+        newHead = head->next;
+        free(head);
     }
     else
     {
@@ -132,6 +133,21 @@ struct node* deleteNode(struct node* head, int index)
         free(deletingNode);
         return newHead;
     }
+}
+
+int search(struct node* head, int val)
+{
+    int ans = -1, currIndex = 0;
+    while (head != NULL)
+    {   
+        if(head->data == val)
+        {
+            ans = currIndex;
+        }
+        head = head->next;
+        currIndex++;
+    }
+    return ans;
 }
 
 int main()
