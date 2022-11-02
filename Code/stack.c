@@ -3,60 +3,78 @@
 
 struct stack
 {
-    int arr[10];
-    int top;
+    int top, size;
+    int *arr;
 };
 
-void push(struct stack* s, int val) // dalana
-{   
-    s->top++;
-    if(s->top == 10)
+
+int isFull(struct stack* s)
+{
+    if(s->top + 1 >= s->size)
     {
+        return 1;
+    }
+    return 0;
+}
+
+int isEmpty(struct stack* s)
+{
+    if(s->top == -1)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void push(struct stack* s, int val)
+{
+    if(isFull(s) == 1)
+    {   
+        printf("Stack Overflow\n");
         return;
     }
+    s->top++;
     s->arr[s->top] = val;
     return;
 }
 
 int top(struct stack* s)
 {
+    if(isEmpty(s) == 1)
+    {   
+        printf("Stack is Underflow");
+        return -1;
+    }
     return s->arr[s->top];
 }
 
-void isEmpty(struct stack* s)
+void pop(struct stack* s)
 {
-    if (s->top == -1)
+    if(isEmpty(s) == 1)
     {
-        printf("Empty\n");
+        printf("Stack is Underflow");
+        return;
     }
-    else
-    {
-        printf("Not Empty");
-    }
-    return;
+    s->top--;
 }
 
-void pop(struct stack* s) // nikalana
+struct stack* intializeStack(int size)
 {
-    if(s->top != -1)
-    {
-        s->top--;
-    }
-    return;
+    struct stack* s = (struct stack*)malloc(sizeof(struct stack));
+    s->arr = (int*)malloc(sizeof(int) * size);
+    s->top = -1;
+    s->size = size;
+    return s;
 }
 
 int main()
 {
-    struct stack s1;
-    s1.top = -1;
+    struct stack* s = intializeStack(3);
+    push(s, 1);
+    push(s, 2);
+    push(s, 3);
+    push(s, 4);
 
-    push(&s1, 2);
-    push(&s1, 3);
-    push(&s1, 4);
-    push(&s1, 5);
-
-    pop(&s1);
-    pop(&s1);
-    push(&s1, 100);
-    printf("%d\n", top(&s1));
+    printf("%d\n", top(s));
+    printf("%d\n", isFull(s));
 }
