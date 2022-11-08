@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
 struct stack
 {
     int top, size;
@@ -58,6 +59,11 @@ void pop(struct stack* s)
     s->top--;
 }
 
+void display(struct stack* s)
+{
+
+}
+
 struct stack* intializeStack(int size)
 {
     struct stack* s = (struct stack*)malloc(sizeof(struct stack));
@@ -68,13 +74,35 @@ struct stack* intializeStack(int size)
 }
 
 int main()
-{
-    struct stack* s = intializeStack(3);
-    push(s, 1);
-    push(s, 2);
-    push(s, 3);
-    push(s, 4);
-
-    printf("%d\n", top(s));
-    printf("%d\n", isFull(s));
+{   
+    struct stack* s1 = intializeStack(20);
+    while (1)
+    {
+        int choice;
+        printf("Select your choice : 1 for push, 2 for pop, 3 for top\n\n");
+        printf("Enter Your Choice : ");
+        scanf("%d", &choice);
+        if(choice == 1)
+        {   
+            int num;
+            printf("Enter Number to push : ");
+            scanf("%d", &num);
+            push(s1, num);
+            printf("Number Pushed Succefully\n");
+        }
+        else if(choice == 2)
+        {
+            pop(s1);
+            printf("Number Popped Succefully\n");
+        }
+        else if(choice == 3)
+        {
+            printf("Top : %d\n", top(s1));
+        }
+        else
+        {
+            break;
+        }
+    }
+    return 0;
 }
