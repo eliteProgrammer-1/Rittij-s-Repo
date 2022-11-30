@@ -4,17 +4,41 @@
 
 int partition(int* arr, int start, int end)
 {   
-    int index = start;
-    for (int i = start; i < end; i++)
+    int index = 0, pivotElement = arr[end];
+    int* temp = new int[end - start + 1];
+    for (int i = start; i <= end; i++)
     {
-        if(arr[i] < arr[end])
+        if(arr[i] < pivotElement)
         {
-            std:: swap(arr[i], arr[index]);
+            temp[index] = arr[i];
             index++;
         }
     }
-    std:: swap(arr[index], arr[end]);
-    return index;
+
+    temp[index] = pivotElement;
+    index++;
+
+    for (int i = start; i < end; i++)
+    {
+        if(arr[i] > pivotElement)
+        {
+            temp[index] = arr[i];
+            index++;
+        }
+    }
+    
+    int pivotIndex;
+    index = 0;
+    for (int i = start; i <= end; i++)
+    {   
+        if(arr[i] == pivotElement)
+        {
+            pivotIndex = i;
+        }
+        arr[i] = temp[index];
+        index++;
+    }
+    return pivotIndex;
 }
 
 void quickSort(int* arr, int start, int end)
