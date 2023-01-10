@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<stdlib.h>
 
 struct node
 {
@@ -49,8 +50,11 @@ struct node *createNode(int value)
 //     }
 // }
 
+int g = 0;
+
 struct node* insertion(struct node *root, int value) // recursive
-{
+{   
+    g++;
     if (root == NULL)
     {
         return createNode(value);
@@ -71,15 +75,42 @@ struct node* insertion(struct node *root, int value) // recursive
     else if(value < root->value)
     {
         insertion(root->left, value);
+        printf("right-> %d\n", g);
     }
     else if(value > root->value)
     {
         insertion(root->right, value);
+        printf("right-> %d\n", g);
     }
 
     return root;
 }
 
+void inorder(struct node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    inorder(root->left);
+    printf("%d ", root->value);
+    inorder(root->right);
+}
+
 int main()
 {
+    struct node* root = NULL;
+    root = insertion(root, 6);
+    g = 0;
+    root = insertion(root, 5);
+    g = 0;
+    root = insertion(root, 4);
+    g = 0;
+    root = insertion(root, 7);
+    g = 0;
+    root = insertion(root, 3);
+    g = 0;
+    root = insertion(root, 1);
+    g = 0;
+    root = insertion(root, 2);
 }
