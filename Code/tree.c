@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
 struct node
 {
@@ -50,16 +50,16 @@ struct node *createNode(int value)
 //     }
 // }
 
-int g = 0;
+// int g = 0;
 
-struct node* insertion(struct node *root, int value) // recursive
-{   
-    g++;
+struct node *insertion(struct node *root, int value) // recursive
+{
+    // g++;
     if (root == NULL)
     {
         return createNode(value);
     }
-    
+
     if (value > root->value && root->right == NULL)
     {
         struct node *newNode = createNode(value);
@@ -72,45 +72,116 @@ struct node* insertion(struct node *root, int value) // recursive
         root->left = newNode;
         return root;
     }
-    else if(value < root->value)
+    else if (value < root->value)
     {
         insertion(root->left, value);
-        printf("right-> %d\n", g);
+        // printf("right-> %d\n", g);
     }
-    else if(value > root->value)
+    else if (value > root->value)
     {
         insertion(root->right, value);
-        printf("right-> %d\n", g);
+        // printf("right-> %d\n", g);
     }
 
     return root;
 }
 
-void inorder(struct node* root)
+void inorder(struct node *root)
 {
-    if(root == NULL)
+    if (root == NULL)
     {
         return;
     }
+
     inorder(root->left);
     printf("%d ", root->value);
     inorder(root->right);
 }
 
+void preorder(struct node* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    printf("%d ", root->value);
+    preorder(root->left);
+    preorder(root->right);
+}
+
+
+void postorder(struct node* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    postorder(root->left);
+    postorder(root->right);
+    printf("%d ", root->value);
+}
+
+struct node* predecessor(struct node* root)
+{
+    root = root->left;
+    // printf("left....%d\n", root->value);
+    while(root->right != NULL)
+    {
+        root = root->right;
+    }
+    return root;
+}
+
+struct node* delete(struct node* root, int target)
+{
+    if(root->left == NULL && root->right == NULL) // leaf node
+    {   
+        // printf("%d ", root->value);
+        free(root);
+        return NULL;
+    }
+    
+    if(root->value == target)
+    {
+        struct node* predecessorNode = predecessor(root);
+        // printf("%d ", predecessorNode->value);
+        root->value = predecessorNode->value;
+        root->left = delete(root->left, predecessorNode->value);
+    }
+    else if(root->value < target)
+    {
+        root->right = delete(root->right, target);
+    }
+    else // if root->value > target
+    {
+        root->left = delete(root->left, target);
+    }
+    root;
+}
+
 int main()
 {
-    struct node* root = NULL;
+    struct node *root = NULL;
     root = insertion(root, 6);
-    g = 0;
+    // g = 0;
     root = insertion(root, 5);
-    g = 0;
+    // g = 0;
     root = insertion(root, 4);
-    g = 0;
+    // g = 0;
     root = insertion(root, 7);
-    g = 0;
+    // g = 0;
     root = insertion(root, 3);
-    g = 0;
+    // g = 0;
     root = insertion(root, 1);
-    g = 0;
+    // g = 0;
     root = insertion(root, 2);
+
+    inorder(root);
+    root = delete(root, 1);
+    printf("\n");
+    inorder(root);
+    // preorder(root);
+    // postorder(root);
 }
